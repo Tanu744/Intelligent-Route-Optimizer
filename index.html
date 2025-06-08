@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinder: Intelligent Route Optimization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Pathfinder: Intelligent Route Optimization</h1>
+        <p>Advanced graph visualization and pathfinding algorithms with real-time animation</p>
+    </div>
+
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+            <div class="status-bar" id="statusBar">Ready - Click to add nodes</div>
+        </div>
+
+        <div class="controls">
+            <!-- Graph Creation Section -->
+            <div class="control-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>🎨 Graph Creation</span>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="control-group">
+                        <label>Interaction Mode</label>
+                        <div class="mode-buttons">
+                            <div class="mode-btn active" onclick="setMode('addNode')">Add Nodes</div>
+                            <div class="mode-btn" onclick="setMode('addEdge')">Add Edges</div>
+                            <div class="mode-btn" onclick="setMode('moveNode')">Move Nodes</div>
+                            <div class="mode-btn" onclick="setMode('deleteNode')">Delete</div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="animationSpeed">Animation Speed</label>
+                        <div class="speed-control">
+                            <span class="speed-label">Slow</span>
+                            <input type="range" id="animationSpeed" min="1" max="10" value="5">
+                            <span class="speed-label">Fast</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="edgeWeight">Edge Weight (Manual Mode)</label>
+                        <div class="weight-control">
+                            <input type="checkbox" id="manualWeight" onchange="toggleManualWeight()">
+                            <label for="manualWeight">Manual Weight</label>
+                            <input type="number" id="edgeWeight" min="1" max="999" value="10" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pathfinding Section -->
+            <div class="control-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>🔍 Pathfinding</span>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="control-group">
+                        <label for="startNode">Start Node</label>
+                        <select id="startNode">
+                            <option value="">Select start node</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="endNode">End Node</label>
+                        <select id="endNode">
+                            <option value="">Select end node</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Algorithms</label>
+                        <div class="algorithm-toggles">
+                            <div class="algorithm-toggle active" onclick="toggleAlgorithm('dijkstra')">
+                                <input type="checkbox" id="dijkstra" checked>
+                                <label for="dijkstra">Dijkstra</label>
+                            </div>
+                            <div class="algorithm-toggle active" onclick="toggleAlgorithm('astar')">
+                                <input type="checkbox" id="astar" checked>
+                                <label for="astar">A*</label>
+                            </div>
+                            <div class="algorithm-toggle active" onclick="toggleAlgorithm('bfs')">
+                                <input type="checkbox" id="bfs" checked>
+                                <label for="bfs">BFS</label>
+                            </div>
+                            <div class="algorithm-toggle active" onclick="toggleAlgorithm('dfs')">
+                                <input type="checkbox" id="dfs" checked>
+                                <label for="dfs">DFS</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="findPaths()">🚀 Find Paths</button>
+                        <button class="btn btn-secondary" onclick="findMST()">🌳 Find MST</button>
+                        <button class="btn btn-info" onclick="stopAnimation()">⏹️ Stop</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="control-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>📊 Results</span>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="results" id="results">
+                        <div class="result-item">No results yet. Run an algorithm to see results here.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Management Section -->
+            <div class="control-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>💾 Data Management</span>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="action-buttons">
+                        <button class="btn btn-info" onclick="exportGraph()">📤 Export Graph</button>
+                        <button class="btn btn-info" onclick="importGraph()">📥 Import Graph</button>
+                        <button class="btn btn-danger" onclick="clearCanvas()">🗑️ Clear All</button>
+                        <button class="btn btn-danger" onclick="clearPaths()">🧹 Clear Paths</button>
+                    </div>
+                    
+                    <div class="control-group" style="margin-top: 20px;">
+                        <label>Example Graphs</label>
+                        <div class="example-buttons">
+                            <button class="btn btn-secondary" onclick="loadExample('grid')">Grid</button>
+                            <button class="btn btn-secondary" onclick="loadExample('star')">Star</button>
+                            <button class="btn btn-secondary" onclick="loadExample('tree')">Tree</button>
+                            <button class="btn btn-secondary" onclick="loadExample('complete')">Complete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
